@@ -7,16 +7,14 @@ import java.util.*;
  */
 public class BFS {
 
-    private Queue<Node> queue = new LinkedList<>();
-    private Set<Node> used = new HashSet<>();
-
     public int bfs(Node root, Node target) {
         int step = 0;
         Queue<Node> queue = new LinkedList<>();
         queue.add(root);
         while (!queue.isEmpty()) {
             step++;
-            for (int i = 0; i < queue.size(); i++) {
+            int size = queue.size();//每一层的size大小固定
+            for (int i = 0; i < size; i++) {
                 Node cur = queue.remove();
                 if (cur.getName().equals(target.getName())) {
                     return step;
@@ -59,13 +57,17 @@ public class BFS {
 
     public static void main(String[] args) {
         //初始化
-        Node G = new Node("G", new HashSet<>());
+        Node H = new Node("H", new HashSet<>());
+        Set<Node> GNexts = new HashSet<>();
+        GNexts.add(H);
+        Node G = new Node("G", GNexts);
         Set<Node> FNexts = new HashSet<>();
         FNexts.add(G);
         Node F = new Node("F", FNexts);
         Node E = new Node("E", new HashSet<>());
         Set<Node> DNexts = new HashSet<>();
         DNexts.add(G);
+        DNexts.add(F);
         Node D = new Node("D", DNexts);
         Set<Node> CNexts = new HashSet<>();
         CNexts.add(E);
@@ -82,7 +84,7 @@ public class BFS {
 
         //开始遍历
         BFS bfs = new BFS();
-        int steps = bfs.bfs2(A, F);
+        int steps = bfs.bfs(A, H);
         System.out.println(steps);
     }
 
