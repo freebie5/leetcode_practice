@@ -8,6 +8,7 @@ import java.util.Queue;
  */
 public class NumIslands {
 
+    //广度优先搜索
     public int numIslands(char[][] grid) {
         if (grid == null || grid.length == 0) {
             return 0;
@@ -92,6 +93,49 @@ public class NumIslands {
         return result;
     }
 
+    //深度优先搜索
+    public int numIslands3(char[][] grid) {
+
+        if(grid==null || grid.length==0) {
+            return 0;
+        }
+
+        int nr = grid.length;
+        int nc = grid[0].length;
+        int result = 0;
+        for(int r=0;r<nr;r++) {
+            for(int c=0;c<nc;c++) {
+                if(grid[r][c] == '1') {
+                    result++;
+                    grid[r][c] = '0';
+                    deepSearch(grid, r,c);
+                }
+            }
+        }
+        return result;
+    }
+
+    private void deepSearch(char[][] grid, int r, int c) {
+        int nr = grid.length;
+        int nc = grid[0].length;
+        if(r-1>=0 && grid[r-1][c]=='1') {
+            grid[r-1][c] = '0';
+            deepSearch(grid, r-1, c);
+        }
+        if(r+1<nr && grid[r+1][c]=='1') {
+            grid[r+1][c] = '0';
+            deepSearch(grid, r+1, c);
+        }
+        if(c-1>=0 && grid[r][c-1]=='1') {
+            grid[r][c-1] = '0';
+            deepSearch(grid, r, c-1);
+        }
+        if(c+1<nc && grid[r][c+1]=='1') {
+            grid[r][c+1] = '0';
+            deepSearch(grid, r, c+1);
+        }
+    }
+
     public static void main(String[] args) {
         char[][] grid = {
             {'1','1','1','1','0'},
@@ -108,7 +152,7 @@ public class NumIslands {
         };
 
         NumIslands numbIslands = new NumIslands();
-        int num = numbIslands.numIslands2(grid);
+        int num = numbIslands.numIslands3(grid2);
         System.out.println(num);
     }
 
