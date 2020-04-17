@@ -2,6 +2,7 @@ package org.sy.leetcode_practice.dfs;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.Stack;
 
 /**
  * 深度优先搜索
@@ -23,6 +24,26 @@ public class DFS {
         }
         return false;
 
+    }
+
+    //
+    public boolean dfsStack(Node root, Node target) {
+        Set<Node> visited = new HashSet<>();
+        Stack<Node> stack = new Stack<>();
+        stack.push(root);
+        while(!stack.isEmpty()) {
+            Node cur = stack.pop();
+            if(cur.getName().equals(target.getName())) {
+                return true;
+            }
+            for(Node ne:cur.getNexts()) {
+                if(!visited.contains(ne)) {
+                    stack.push(ne);
+                    visited.add(ne);
+                }
+            }
+        }
+        return false;
     }
 
     public static void main(String[] args) {
@@ -55,7 +76,8 @@ public class DFS {
         //开始遍历
         DFS dfs = new DFS();
         Set<Node> visited = new HashSet<>();
-        boolean steps = dfs.dfs(A, H, visited);
+//        boolean steps = dfs.dfs(A, H, visited);
+        boolean steps = dfs.dfsStack(A, H);
         System.out.println(steps);
     }
 
